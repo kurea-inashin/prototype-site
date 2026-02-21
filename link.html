@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>RIa Official SIte - おみくじ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="今日の運勢を占ってみましょう！確率式おみくじ。">
+<meta name="keywords" content="おみくじ, 運勢, 占い, 確率, 大吉, 凶">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/slide.css">
+<script type="text/javascript" src="js/openclose.js"></script>
+<script type="text/javascript" src="js/fixmenu_pagetop.js"></script>
+
+<style type="text/css">
+/* おみくじボタンのスタイル */
+#drawOmikuji {
+    display: block; /* ボタンをブロック要素にし、中央寄せ可能にする */
+    margin: 30px auto; /* 上下に余白、左右中央寄せ */
+    padding: 15px 40px; /* 内側の余白 */
+    font-size: 1.5em; /* 文字サイズを大きく */
+    font-weight: bold; /* 文字を太く */
+    color: #fff; /* 文字色を白に */
+    background-color: #e07b39; /* ボタンの背景色（暖色系） */
+    border: none; /* ボーダーをなくす */
+    border-radius: 8px; /* 角を丸くする */
+    cursor: pointer; /* マウスオーバーでカーソルをポインターに */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* 影で立体感を出す */
+    transition: all 0.3s ease; /* ホバー時のアニメーション */
+    letter-spacing: 0.1em; /* 文字間隔を少し広げる */
+    text-decoration: none; /* 下線があれば消す */
+}
+
+#drawOmikuji:hover {
+    background-color: #c96a30; /* ホバー時の背景色を少し濃く */
+    transform: translateY(-3px); /* 少し上に浮き上がるアニメーション */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* 影を強調 */
+}
+
+#drawOmikuji:active {
+    transform: translateY(0); /* クリック時に押し込まれるように */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* おみくじ結果表示エリアのスタイル */
+#omikujiResult {
+    background-color: #fcf8e3; /* 背景色（淡いクリーム色） */
+    border: 3px solid #e07b39; /* 枠線 */
+    border-radius: 10px; /* 角を丸くする */
+    padding: 40px 20px; /* 内側の余白 */
+    margin-top: 40px; /* 上部に余白 */
+    font-size: 2.5em; /* 文字サイズをさらに大きく */
+    font-weight: bold; /* 文字を太く */
+    color: #333; /* 文字色 */
+    text-align: center; /* テキストを中央寄せ */
+    min-height: 150px; /* 最低限の高さを設定 */
+    display: flex; /* Flexboxを使って内容を中央揃え */
+    justify-content: center; /* 水平方向の中央揃え */
+    align-items: center; /* 垂直方向の中央揃え */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* 影 */
+    line-height: 1.5; /* 行の高さを調整 */
+    opacity: 0; /* 初期状態では透明 */
+    transform: translateY(20px); /* 初期状態では少し下 */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* アニメーション */
+}
+
+/* おみくじ結果表示時に表示されるスタイル */
+#omikujiResult.active {
+    opacity: 1; /* 表示時に不透明にする */
+    transform: translateY(0); /* 表示時に元の位置に戻す */
+}
+
+/* おみくじ結果の運勢ごとの色分け */
+.omikuji-daikichi { color: #d9534f; } /* 大吉 - 赤系 */
+.omikuji-chukichi { color: #5cb85c; } /* 中吉 - 緑系 */
+.omikuji-shokichi { color: #f0ad4e; } /* 小吉 - オレンジ系 */
+.omikuji-kichi { color: #337ab7; } /* 吉 - 青系 */
+.omikuji-suekichi { color: #5bc0de; } /* 末吉 - 水色系 */
+.omikuji-kyo { color: #777; } /* 凶 - 灰色系 */
+.omikuji-daikyo { color: #444; background-color: #fdd; } /* 大凶 - 濃い灰色、背景薄赤 */
+.kumakichi { color: #8B4513; } /* くま吉 - 茶色系 */
+
+/* 星座占いセクションのスタイル */
+#horoscopeSection {
+    margin-top: 50px;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+#horoscopeSection h2 {
+    text-align: center;
+    color: #e07b39;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+.horoscope-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.horoscope-item {
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.horoscope-item:hover {
+    transform: translateY(-5px);
+}
+
+.horoscope-item .rank {
+    font-size: 2.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* ランキングの色分けは適宜調整してください */
+.rank-1 { color: #d9534f; } /* 1位 */
+.rank-2 { color: #f0ad4e; } /* 2位 */
+.rank-3 { color: #5cb85c; } /* 3位 */
+.rank-4 { color: #337ab7; } /* 4位 */
+.rank-5 { color: #5bc0de; } /* 5位 */
+.rank-6 { color: #777; } /* 6位 */
+.rank-7 { color: #d9534f; } /* 7位 */
+.rank-8 { color: #f0ad4e; } /* 8位 */
+.rank-9 { color: #5cb85c; } /* 9位 */
+.rank-10 { color: #337ab7; } /* 10位 */
+.rank-11 { color: #5bc0de; } /* 11位 */
+.rank-12 { color: #777; } /* 12位 */
+
+
+.horoscope-item .sign-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.horoscope-item .comment {
+    font-size: 0.9em;
+    color: #666;
+    line-height: 1.4;
+}
+
+.horoscope-item img {
+    max-width: 80px;
+    height: auto;
+    margin-bottom: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="inner">
+<h1 id="logo"><a href="index.html"><img src="images/logo.png" alt="SAMPLE COMPANY"></a></h1>
+<div id="contact">
+<p class="tel">Welcome To My Site !!<span>稼働時間：24時間　休止時間：サイトメンテナンス日</span></p>
+</div>
+<div id="language-switcher">
+  <a href="link.html" hreflang="ja">日本語</a> |
+  <a href="link_en.html" hreflang="en">English</a> |
+  <a href="link_fr.html" hreflang="fr">Français</a>
+</div>
+</div>
+</header>
+
+<nav id="menubar">
+<ul class="inner">
+<li><a href="index.html">ホーム<span>HOME</span></a></li>
+<li><a href="company.html">サイトについて<span>ABOUT WEBSITE</span></a></li>
+<li><a href="service.html">サービス紹介<span>SERVICE</span></a></li>
+<li><a href="recruit.html">製作者情報<span>DEVELOPER INFORMATION</span></a></li>
+<li class="current"><a href="link.html">おみくじ<span>OMIKUJI</span></a></li>
+<li><a href="contact.html">お問い合わせ<span>CONTACT</span></a></li>
+</ul>
+</nav>
+<nav id="menubar-s">
+<ul>
+<li><a href="index.html">ホーム<span>HOME</span></a></li>
+<li ><a href="company.html">サイトについて<span>ABOUT WEBSITE</span></a></li>
+<li><a href="service.html">サービス紹介<span>SERVICE</span></a></li>
+<li><a href="recruit.html">製作者情報<span>DEVELOPER INFORMATION</span></a></li>
+<li class="current"><a href="link.html">おみくじ<span>OMIKUJI</span></li>
+<li><a href="contact.html">お問い合わせ<span>CONTACT</span></a></li>
+</ul>
+</nav>
+
+<div id="contents" class="inner">
+<div id="contents-in">
+
+<div id="main">
+
+<section>
+<h2>今日の運勢を占う</h2>
+<p>おみくじを引いて、今日のあなたの運勢を見てみましょう！</p>
+<button id="drawOmikuji">おみくじを引く</button>
+<div id="omikujiResult">
+    </div>
+</section>
+
+---
+
+<section id="horoscopeSection">
+    <h2>今日の星座占い（開発中-プロトタイプ）</h2>
+    <p></p>
+       
+</section>
+
+</div>
+<div id="sub">
+
+<nav>
+<h2>SERVICE</h2>
+<ul class="submenu">
+<li><a href="#">数当てゲームⅠ</a></li>
+<li><a href="#">数当てゲームⅡ</a></li>
+<li><a href="#">数当てゲームⅢ</a></li>
+<li><a href="#">ブラックジャック</a></li>
+<li><a href="#">マインスイーパー</a></li>
+</ul>
+</nav>
+
+<nav>
+<ul class="submenu">
+<li><a href="#">製作者のプロトタイプ</a></li>
+<li><a href="#">製作者の旧サイト</a></li>
+<li><a href="#">COMING SOON</a></li>
+<li><a href="#">COMING SOON</a></li>
+<li><a href="#">COMING SOON</a></li>
+</ul>
+</nav>
+
+<section>
+
+<h2>おすすめサイト</h2>
+
+<div class="list">
+<a href="service2.html">
+<figure><img src="images/sample1.jpg" alt="写真の説明"></figure>
+<h4>Fire Fox<span class="newicon">おすすめ</span></h4>
+<p>製作者おすすめサイト！</p>
+</a>
+</div>
+
+<div class="list">
+<a href="service2.html">
+<figure><img src="images/sample2.jpg" alt="写真の説明"></figure>
+<h4>BING<span class="newicon">おすすめ</span></h4>
+<p>画像検索が便利！！</p>
+</a>
+</div>
+
+</section>
+
+<div class="box1">
+<h2>準備中</h2>
+<p>コンテンツ募集中<br>
+<br>
+<br>
+</p>
+</div>
+
+</div>
+</div>
+<div id="side">
+
+<section>
+
+<nav>
+<h2>イベント予定</h2>
+<ul class="submenu">
+<li><a href="#">準備中</a></li>
+<li><a href="#">準備中</a></li>
+</ul>
+</nav>
+
+
+</section>
+
+
+<p>
+<a href="recruit.html"><img src="images/banner1.jpg" alt="ロゴについて" class="pc"></a>
+<a href="recruit.html"><img src="images/banner1_sh.jpg" alt="ロゴについて" class="sh"></a>
+</p>
+<p><br>
+<a href="company.html#banner"></a></p>
+
+</div>
+</div>
+<footer>
+
+<div id="footermenu" class="inner">
+
+</div>
+<div id="copyright">
+<small>Copyright&copy; <a href="index.html">KUREA</a> All Rights Reserved.</small>
+<span class="pr"><a href="http://template-party.com/" target="_blank">《Web Design:Template-Party》</a></span>
+</div>
+
+</footer>
+
+<p class="nav-fix-pos-pagetop"><a href="#">↑</a></p>
+
+<script type="text/javascript">
+if (OCwindowWidth() <= 800) {
+	open_close("newinfo_hdr", "newinfo");
+}
+</script>
+
+<div id="menubar_hdr" class="close"></div>
+<script type="text/javascript">
+if (OCwindowWidth() <= 800) {
+	open_close("menubar_hdr", "menubar-s");
+}
+</script>
+
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    const drawButton = document.getElementById('drawOmikuji');
+    const resultDiv = document.getElementById('omikujiResult');
+    const horoscopeList = document.getElementById('horoscopeList');
+
+    // 初期状態では結果表示エリアは非表示
+    resultDiv.style.display = 'none';
+
+    // 運勢とその確率、メッセージを設定
+    const fortunes = [
+        { name: "大吉", class: "omikuji-daikichi", probability: 10, messages: [
+            "🌸 今日は最高の運気！何をやっても成功するでしょう！",
+            "✨ 素晴らしい幸運が訪れます。積極的に行動あるのみ！",
+            "🍀 全ての願いが叶う日。自信を持って前進しましょう！"
+        ]},
+        { name: "中吉", class: "omikuji-chukichi", probability: 25, messages: [
+            "☘ 良いことが起こりそう。チャンスを逃さず掴みましょう！",
+            "😊 順調な一日になりそうです。笑顔を忘れずに！",
+            "🌈 予想外の嬉しい出来事があるかもしれません。"
+        ]},
+        { name: "小吉", "class": "omikuji-shokichi", probability: 30, messages: [
+            "🍃 小さな幸運があなたを待っています。日常に喜びを見つけましょう。",
+            "👍 平穏で安定した一日。感謝の気持ちを大切に。",
+            "🌱 少しの努力で大きな成果が得られるでしょう。"
+        ]},
+        { name: "吉", "class": "omikuji-kichi", probability: 20, messages: [
+            "🌸 今日は穏やかな一日。焦らず、自分のペースで進みましょう。",
+            "🌟 穏やかな運気です。周囲との調和を意識して。",
+            "💖 感謝の気持ちが幸運を引き寄せます。"
+        ]},
+        { name: "末吉", "class": "omikuji-suekichi", probability: 9, messages: [
+            "🌱 良くも悪くもない一日。無理せず、着実に過ごしましょう。",
+            "🤔 慎重な行動が吉と出ます。焦りは禁物です。",
+            "🌻 小さな問題も冷静に対処すれば乗り越えられます。"
+        ]},
+        { name: "凶", "class": "omikuji-kyo", probability: 4, messages: [
+            "☁ 今日は慎重に行動しましょう。予期せぬトラブルに注意が必要です。",
+            "🚧 少し注意が必要な日。無理せず、静かに過ごしましょう。",
+            "🌧 困難に直面するかもしれませんが、乗り越えられます。諦めないで。"
+        ]},
+        { name: "大凶", "class": "omikuji-daikyo", probability: 1, messages: [
+            "🌧 何もかもうまくいかない日かも...。今日は静かに過ごしましょう。無理は禁物です。",
+            "🌑 最低の運気。今日は大切な決断を避け、休息を取りましょう。",
+            "🚨 困難が多い日になりそうです。トラブルに巻き込まれないよう注意してください。"
+        ]},
+        { name: "くま吉", "class": "kumakichi", probability: 1, messages: [
+            "🐻 くまになりそうなきがする一日。もふもふに癒されましょう。",
+            "🍯 甘いものが幸運を呼ぶ予感。くまさんのようにのんびり過ごして。",
+            "🐾 今日はマイペースが一番！くまのようにリラックスして過ごしましょう。"
+        ]}
+    ];
+
+    if (drawButton && resultDiv) {
+        drawButton.addEventListener('click', function() {
+            // 現在の運勢クラスとテキストをクリア
+            resultDiv.className = '';
+            resultDiv.textContent = '';
+            resultDiv.style.display = 'none'; // 新しい運勢表示前に非表示に
+
+            // 確率に基づいて運勢を選択
+            let rand = Math.random() * 100; // 0から99.999...の乱数
+            let cumulativeProbability = 0;
+            let selectedFortune = null;
+
+            for (let i = 0; i < fortunes.length; i++) {
+                cumulativeProbability += fortunes[i].probability;
+                if (rand < cumulativeProbability) {
+                    selectedFortune = fortunes[i];
+                    break;
+                }
+            }
+
+            // 結果を反映
+            if (selectedFortune) {
+                // 複数のメッセージからランダムに選択
+                const randomMessage = selectedFortune.messages[Math.floor(Math.random() * selectedFortune.messages.length)];
+                
+                resultDiv.classList.add(selectedFortune.class);
+                resultDiv.textContent = `${selectedFortune.name} - ${randomMessage}`;
+                
+                // フェードインアニメーションのためにクラスをトグル
+                resultDiv.classList.remove('active'); // 一度外してリセット
+                resultDiv.style.display = 'flex'; // 表示に戻す
+                setTimeout(() => { // 短い遅延を入れてtransitionを有効にする
+                    resultDiv.classList.add('active');
+                }, 10); 
+            }
+        });
+    }
+
+    // 星座占いデータを定義（commentsプロパティを削除）
+    const horoscopes = [
+        { sign: "♈ 牡羊座", img: "images/aries.png" },
+        { sign: "♉ 牡牛座", img: "images/taurus.png" },
+        { sign: "♊ 双子座", img: "images/gemini.png" },
+        { sign: "♋ 蟹座", img: "images/cancer.png" },
+        { sign: "♌ 獅子座", img: "images/leo.png" },
+        { sign: "♍ 乙女座", img: "images/virgo.png" },
+        { sign: "♎ 天秤座", img: "images/libra.png" },
+        { sign: "♏ 蠍座", img: "images/scorpio.png" },
+        { sign: "♐ 射手座", img: "images/sagittarius.png" },
+        { sign: "♑ 山羊座", img: "images/capricorn.png" },
+        { sign: "♒ 水瓶座", img: "images/aquarius.png" },
+        { sign: "♓ 魚座", img: "images/pisces.png" }
+    ];
+
+    // ランダムなメッセージを生成する関数
+    function generateRandomHoroscopeComment(signName, rank) {
+        const adjs = ["今日の", "あなたの", "素晴らしい", "少し変わった", "思いがけない", "最高の"];
+        const nouns = ["一日", "運勢", "幸運", "出来事", "出会い", "チャレンジ", "休息", "学び"];
+        const verbs = ["でしょう", "かもしれません", "待っています", "訪れます", "期待できます", "大切にしましょう"];
+        const advice = ["積極的に行動すると良いでしょう。", "焦らず、じっくりと取り組みましょう。", "新しい発見があるかもしれません。", "周りの人とのコミュニケーションを大切に。", "直感を信じて行動してみてください。", "リラックスして過ごすと吉です。", "小さな幸せを見つけてください。", "目標に向かって一歩踏み出しましょう。", "感謝の気持ちを忘れずに。"];
+
+        const randomAdj = adjs[Math.floor(seededRandom() * adjs.length)];
+        const randomNoun = nouns[Math.floor(seededRandom() * nouns.length)];
+        const randomVerb = verbs[Math.floor(seededRandom() * verbs.length)];
+        const randomAdvice = advice[Math.floor(seededRandom() * advice.length)];
+
+        let comment = `${randomAdj}${randomNoun}は、${signName}にとって${randomVerb}。${randomAdvice}`;
+        
+        // 順位に応じたヒントを追加（完全にランダムなので、少しだけ調整）
+        if (rank <= 3) {
+            comment += " 特に良いことがありそうです！";
+        } else if (rank >= 10) {
+            comment += " 慎重な行動を心がけましょう。";
+        }
+        
+        return comment;
+    }
+
+    // 本日の日付に基づいてシードを生成する関数
+    function getDateSeed() {
+        const today = new Date();
+        // 年、月、日の数値を結合してシードとする (例: 20250701)
+        return today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+    }
+
+    // シード値に基づいて乱数を生成する擬似乱数ジェネレーター (XORShift)
+    // これにより、同じ日であれば常に同じ順序の乱数が生成されます
+    let currentSeed = getDateSeed(); // 初期シードを本日日付に設定
+
+    function seededRandom() {
+        currentSeed ^= currentSeed << 13;
+        currentSeed ^= currentSeed >> 17;
+        currentSeed ^= currentSeed << 5;
+        // 乱数の範囲を0から1にする
+        return ((currentSeed >>> 0) / 0xFFFFFFFF); // 32bit符号なし整数で正規化
+    }
+
+    // 星座占いのランキングを生成・表示する関数
+    function generateHoroscopeRankings() {
+        // 本日の日付のシードで乱数ジェネレータをリセット
+        currentSeed = getDateSeed(); 
+
+        // ランキングのシャッフル（シード付き乱数を使用）
+        const shuffledHoroscopes = [...horoscopes]; // 元の配列をコピー
+        for (let i = shuffledHoroscopes.length - 1; i > 0; i--) {
+            const j = Math.floor(seededRandom() * (i + 1)); // seededRandomを使用
+            [shuffledHoroscopes[i], shuffledHoroscopes[j]] = [shuffledHoroscopes[j], shuffledHoroscopes[i]];
+        }
+
+        horoscopeList.innerHTML = ''; // 既存の内容をクリア
+
+        shuffledHoroscopes.forEach((astro, index) => {
+            const rank = index + 1;
+            // ランダムメッセージ生成関数を呼び出す
+            const randomComment = generateRandomHoroscopeComment(astro.sign.split(' ')[1], rank); // 星座名だけを渡す
+            const listItem = document.createElement('li');
+            listItem.classList.add('horoscope-item');
+            listItem.innerHTML = `
+                <div class="rank rank-${rank}">${rank}位</div>
+                <img src="${astro.img}" alt="${astro.sign}" onerror="this.onerror=null;this.src='images/default.png';">
+                <div class="sign-name">${astro.sign}</div>
+                <p class="comment">${randomComment}</p>
+            `;
+            horoscopeList.appendChild(listItem);
+        });
+    }
+
+    // ページロード時に星座占いを生成
+    if (horoscopeList) {
+        generateHoroscopeRankings();
+    }
+});
+</script>
+</body>
+</html>
