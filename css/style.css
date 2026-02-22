@@ -9,11 +9,11 @@
 body {
   margin: 0;
   padding: 0;
-  color: #2c3e50; /* 濃いグレーから青みのある濃色へ */
+  color: #2c3e50;
   font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
   font-size: 15px;
   line-height: 2;
-  background: linear-gradient(to bottom, #E0F2F7, #FFFFFF); /* ピンクを薄い水色に、青を白に */
+  background: linear-gradient(to bottom, #E0F2F7, #FFFFFF); /* 全体背景を水色と白のグラデーションに */
 }
 
 h1, h2, h3, h4, h5, p, ul, ol, li, dl, dt, dd, form, figure, form {
@@ -49,12 +49,12 @@ iframe {
 }
 
 a {
-  color: #0056b3; /* 333から落ち着いた青へ */
+  color: #0056b3;
   transition: 0.5s;
 }
 
 a:hover {
-  color: #00b4d8; /* ホバー色を明るい水色へ */
+  color: #00b4d8;
   text-decoration: none;
 }
 
@@ -65,7 +65,7 @@ a:hover {
 }
 
 header {
-  background: linear-gradient(to right, #003366, #0077b6); /* ピンクと青を、濃い青とスカイブルーへ */
+  background: linear-gradient(to right, #003366, #0077b6); /* ヘッダーを濃い青と青のグラデーションに */
   height: 125px;
 }
 
@@ -79,7 +79,6 @@ header #logo {
   float: right;
   margin-top: 12px;
   text-align: center;
-  color: #ffffff; /* 白抜き文字で視認性向上 */
 }
 
 .tel {
@@ -96,11 +95,11 @@ header #logo {
   clear: both;
   overflow: hidden;
   background: linear-gradient(to right, 
-    #005b96, /* 濃い青 */
+    #005b96, /* 青 */
     #0077b6, /* 青 */
-    #00b4d8, /* 明るい青 */
-    #90e0ef, /* 水色 */
-    #00b4d8, /* 明るい青 */
+    #00b4d8, /* 水色 */
+    #90e0ef, /* 薄い水色 */
+    #00b4d8, /* 水色 */
     #0077b6  /* 青 */
   );
   border-radius: 8px;
@@ -115,11 +114,11 @@ header #logo {
   float: left;
   width: 16.66%;
   box-sizing: border-box;
-  border-right: 1px solid rgba(255, 255, 255, 0.2); /* 黒から白系の透過線へ */
+  border-right: 1px solid rgba(255, 255, 255, 0.2); /* 右側に区切り線を追加 */
 }
 
 #menubar li:last-child {
-  border-right: none; 
+  border-right: none; /* 最後の要素の右側の区切り線を削除 */
 }
 
 #menubar li a {
@@ -130,12 +129,12 @@ header #logo {
   line-height: 1.6;
   padding: 14px 0;
   text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
-  color: #ffffff; /* 黒から白へ */
-  transition: background-color 0.3s ease; 
+  color: #ffffff;
+  transition: background-color 0.3s ease; /* マウスオーバー時のアニメーションを追加 */
 }
 
 #menubar li a:hover {
-  background-color: rgba(255, 255, 255, 0.2); 
+  background-color: rgba(255, 255, 255, 0.2); /* マウスオーバー時に薄い白色の背景色を追加 */
 }
 
 /* 最初の要素の左ボーダーを削除 */
@@ -144,68 +143,68 @@ header #logo {
 }
 /* おみくじボタンのスタイル */
 #drawOmikuji {
-    display: block; 
-    margin: 30px auto; 
-    padding: 15px 40px; 
-    font-size: 1.5em; 
-    font-weight: bold; 
-    color: #fff; 
-    background-color: #0077b6; /* 暖色から寒色へ */
-    border: none; 
-    border-radius: 8px; 
-    cursor: pointer; 
-    box-shadow: 0 5px 15px rgba(0, 119, 182, 0.2); 
-    transition: all 0.3s ease; 
-    letter-spacing: 0.1em; 
-    text-decoration: none; 
+    display: block; /* ボタンをブロック要素にし、中央寄せ可能にする */
+    margin: 30px auto; /* 上下に余白、左右中央寄せ */
+    padding: 15px 40px; /* 内側の余白 */
+    font-size: 1.5em; /* 文字サイズを大きく */
+    font-weight: bold; /* 文字を太く */
+    color: #fff; /* 文字色を白に */
+    background-color: #0077b6; /* ボタンの背景色（青系） */
+    border: none; /* ボーダーをなくす */
+    border-radius: 8px; /* 角を丸くする */
+    cursor: pointer; /* マウスオーバーでカーソルをポインターに */
+    box-shadow: 0 5px 15px rgba(0, 119, 182, 0.3); /* 影で立体感を出す */
+    transition: all 0.3s ease; /* ホバー時のアニメーション */
+    letter-spacing: 0.1em; /* 文字間隔を少し広げる */
+    text-decoration: none; /* 下線があれば消す */
 }
 
 #drawOmikuji:hover {
-    background-color: #005b96; 
-    transform: translateY(-3px); 
-    box-shadow: 0 8px 20px rgba(0, 119, 182, 0.3); 
+    background-color: #005b96; /* ホバー時の背景色を少し濃く */
+    transform: translateY(-3px); /* 少し上に浮き上がるアニメーション */
+    box-shadow: 0 8px 20px rgba(0, 119, 182, 0.4); /* 影を強調 */
 }
 
 #drawOmikuji:active {
-    transform: translateY(0); 
+    transform: translateY(0); /* クリック時に押し込まれるように */
     box-shadow: 0 3px 10px rgba(0, 119, 182, 0.2);
 }
 
 /* おみくじ結果表示エリアのスタイル */
 #omikujiResult {
-    background-color: #f0faff; /* クリーム色から淡い水色へ */
-    border: 3px solid #0077b6; /* 暖色から青へ */
-    border-radius: 10px; 
-    padding: 40px 20px; 
-    margin-top: 40px; 
-    font-size: 2.5em; 
-    font-weight: bold; 
-    color: #003366; 
-    text-align: center; 
-    min-height: 150px; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); 
-    line-height: 1.5; 
-    opacity: 0; 
-    transform: translateY(20px); 
-    transition: opacity 0.5s ease, transform 0.5s ease; 
+    background-color: #f0faff; /* 背景色（淡い水色） */
+    border: 3px solid #0077b6; /* 枠線 */
+    border-radius: 10px; /* 角を丸くする */
+    padding: 40px 20px; /* 内側の余白 */
+    margin-top: 40px; /* 上部に余白 */
+    font-size: 2.5em; /* 文字サイズをさらに大きく */
+    font-weight: bold; /* 文字を太く */
+    color: #003366; /* 文字色 */
+    text-align: center; /* テキストを中央寄せ */
+    min-height: 150px; /* 最低限の高さを設定 */
+    display: flex; /* Flexboxを使って内容を中央揃え */
+    justify-content: center; /* 水平方向の中央揃え */
+    align-items: center; /* 垂直方向の中央揃え */
+    box-shadow: 0 5px 15px rgba(0, 119, 182, 0.1); /* 影 */
+    line-height: 1.5; /* 行の高さを調整 */
+    opacity: 0; /* 初期状態では透明 */
+    transform: translateY(20px); /* 初期状態では少し下 */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* アニメーション */
 }
 
 /* おみくじ結果表示時に表示されるスタイル */
 #omikujiResult.active {
-    opacity: 1; 
-    transform: translateY(0); 
+    opacity: 1; /* 表示時に不透明にする */
+    transform: translateY(0); /* 表示時に元の位置に戻す */
 }
 
 /* おみくじ結果の運勢ごとの色分け */
 .omikuji-daikichi { color: #005b96; } /* 大吉 - 濃い青 */
 .omikuji-chukichi { color: #0077b6; } /* 中吉 - 青 */
-.omikuji-shokichi { color: #00b4d8; } /* 小吉 - 明るい青 */
-.omikuji-kichi { color: #48cae4; } /* 吉 - 水色 */
-.omikuji-suekichi { color: #90e0ef; } /* 末吉 - 薄い水色 */
-.omikuji-kyo { color: #777; } /* 凶 - 灰色 */
+.omikuji-shokichi { color: #00b4d8; } /* 小吉 - 水色 */
+.omikuji-kichi { color: #48cae4; } /* 吉 - 薄い青 */
+.omikuji-suekichi { color: #90e0ef; } /* 末吉 - 水色系 */
+.omikuji-kyo { color: #777; } /* 凶 - 灰色系 */
 .omikuji-daikyo { color: #444; background-color: #e3f2fd; } /* 大凶 - 濃い灰色、背景淡い青 */
 
 #menubar li a span {
@@ -214,18 +213,18 @@ header #logo {
   font-size: 9px;
   font-weight: normal;
   letter-spacing: 0.2em;
-  opacity: 0.8; 
+  opacity: 0.7; /* 透明度を調整 */
 }
 
 #menubar li a:hover {
-  background-color: rgba(255, 255, 255, 0.1); 
+  background-color: rgba(255, 255, 255, 0.1); /* ホバー時の背景色を薄くする */
   color: #fff;
 }
 
 #menubar li.current a {
-  background: linear-gradient(to bottom, #0077b6, #00b4d8); /* 青系のグラデーションへ */
+  background: linear-gradient(to bottom, #0077b6, #00b4d8); /* 現在のページの背景色を調整 */
   color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 影を薄くする */
 }
 
 #menubar-s {
@@ -241,7 +240,7 @@ header #logo {
   overflow: hidden;
   padding-top: 40px;
   padding-bottom: 40px;
-  background: #FFFFFF; /* ベージュから白へ */
+  background: #FFFFFF;
 }
 
 #contents-in {
@@ -264,9 +263,9 @@ header #logo {
   margin-bottom: 20px;
   padding: 10px 15px;
   font-size: 16px;
-  background: linear-gradient(to right, #005b96, #00b4d8); /* ピンクと青を、青のグラデへ */
+  background: linear-gradient(to right, #005b96, #00b4d8); /* 見出しを青と水色のグラデーションに */
   border-bottom: 3px solid #ADE8F4;
-  color: #fff; 
+  color: #fff; /* 文字色を白に */
 }
 
 #main h3 {
@@ -274,7 +273,7 @@ header #logo {
   margin-bottom: 20px;
   padding: 4px 15px;
   font-size: 16px;
-  border: 1px solid #c0cfe0; /* ベージュから青白いグレーへ */
+  border: 1px solid #c0cfe0;
 }
 
 #main h3::first-letter {
@@ -312,7 +311,7 @@ header #logo {
 
 #main .list a:hover {
   color: #fff;
-  background: #003366; /* 黒から紺へ */
+  background: #003366;
 }
 
 #main .list a::before {
@@ -329,7 +328,7 @@ header #logo {
 }
 
 #main .list a:hover::before {
-  background: #00b4d8; /* ピンクから明るい青へ */
+  background: #00b4d8;
 }
 
 #main .list h4 {
@@ -374,11 +373,11 @@ header #logo {
 #sub h2,
 #side h2 {
   text-align: center;
-  background: linear-gradient(to right, #003366, #0077b6); /* 見出しを青グラデに */
+  background: linear-gradient(to right, #003366, #0077b6); /* サイドバーの見出しを濃い青と青のグラデーションに */
   padding: 8px 0px;
   border-radius: 6px 6px 0px 0px;
   margin-bottom: 10px;
-  color: #fff; 
+  color: #fff; /* 文字色を白に */
 }
 
 #sub p,
@@ -466,7 +465,7 @@ header #logo {
 
 footer {
   clear: both;
-  background: #f0f4f7; /* 明るい青白いグレーへ */
+  background: #f0f4f7;
   color: #2c3e50;
   font-size: 85%;
 }
@@ -491,13 +490,12 @@ footer .pr {
 #copyright {
   clear: both;
   text-align: center;
-  background: #003366; /* 薄い青から深い紺へ */
+  background: #003366;
   color: #fff;
 }
 
 #copyright a {
   text-decoration: none;
-  color: #ade8f4;
 }
 
 #new dl {
@@ -543,7 +541,6 @@ footer .pr {
   width: 140px;
   text-align: center;
   font-weight: normal;
-  background: #f0faff;
 }
 
 #main input[type="submit"].btn,
@@ -587,7 +584,7 @@ body.is-fixed-pagetop .nav-fix-pos-pagetop a {
   line-height: 50px;
   bottom: 50px;
   right: 3%;
-  background: rgba(0, 51, 102, 0.6); /* 黒から紺の透過へ */
+  background: rgba(0, 51, 102, 0.6);
   color: #fff;
   border: 1px solid #fff;
   animation-name: scroll;
@@ -717,7 +714,7 @@ img.fl {
     text-decoration: none;
     padding: 15px 10px 15px 20px;
     border-bottom: 1px solid #fff;
-    background: rgba(0, 31, 63, 0.9); /* 黒から紺の透過へ */
+    background: rgba(0, 31, 63, 0.9);
     font-size: 20px;
     color: #fff;
   }
